@@ -40,7 +40,6 @@ def dados_cliente(id: int):
     else:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Cliente não existe")
 
-
 controle = False
 @app.post("/fila")
 def novo_cliente(clientes: Clientes):
