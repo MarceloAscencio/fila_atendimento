@@ -40,15 +40,19 @@ def dados_cliente(id: int):
     else:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Cliente não existe")
 
+controle = False
 @app.post("/fila")
 def novo_cliente(clientes: Clientes):
+    global controle
     clientes.id = db_clientes[-1].id + 1
     if len(clientes.nome) <= 20:
         if len(clientes.tipo) == 1:
-            if clientes.tipo == "P":
+            if clientes.tipo == "P" and (len(db_clientes) < 2 or db_clientes[len(db_clientes)-1].tipo != "P" and controle == False):
                 db_clientes.insert(len(db_clientes) - 1, clientes)
+                controle = True
             else:
                 db_clientes.append(clientes)
+                controle = False
         else:
             return {"Mensagem": "Aceito um digito apenas"}
     else:
