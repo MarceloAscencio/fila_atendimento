@@ -82,3 +82,4 @@ def deletar_cliente(id: int):
     for index, cliente in enumerate([cliente for cliente in db_clientes if not cliente.atendido], start=1):
         cliente.id = index
     return {"Mensagem": "Cliente removido!"}
+    
